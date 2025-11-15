@@ -1,0 +1,102 @@
+{
+	"name": "Variable_set_append_variable",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.input",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Running_num",
+								"value": {
+									"value": "@add(item(),10)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Cum_list",
+								"value": {
+									"value": "@variables('Running_num')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Final_List",
+					"value": {
+						"value": "@variables('Cum_list')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"input": {
+				"type": "array"
+			}
+		},
+		"variables": {
+			"Cum_list": {
+				"type": "Array"
+			},
+			"Running_num": {
+				"type": "Integer"
+			},
+			"Final_List": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-10-25T21:53:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

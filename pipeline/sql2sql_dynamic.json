@@ -1,0 +1,64 @@
+{
+	"name": "sql2sql_dynamic",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DynamicSQLDatasetDatabase",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "sales1",
+							"DataBaseName": "azuresql-db1"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DynamicSQLDatasetDatabase",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "sales1",
+							"DataBaseName": "database2"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-10-21T21:34:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

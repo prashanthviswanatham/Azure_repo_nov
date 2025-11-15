@@ -1,0 +1,9 @@
+{
+	"name": "DataFactory-oct",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bd9b73da-bc54-46b9-9ee5-bf92206a6aef",
+		"tenantId": "d9322b00-1379-4c00-afc8-45f1007857ba"
+	}
+}

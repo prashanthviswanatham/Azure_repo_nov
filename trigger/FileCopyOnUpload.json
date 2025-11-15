@@ -1,0 +1,25 @@
+{
+	"name": "FileCopyOnUpload",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Blob2blob_singlefile_dynamic",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/dataset/blobs/input",
+			"blobPathEndsWith": "employee.csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4df91550-c2e1-485c-a743-6dafaff0a888/resourceGroups/RG-AzureTraining/providers/Microsoft.Storage/storageAccounts/mumbaitraining",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

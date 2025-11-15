@@ -1,0 +1,34 @@
+{
+	"name": "DynamicSQLDatasetDatabase",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DynamicAzureSqlDatabase1",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DataBaseName": {
+					"value": "@dataset().DataBaseName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			},
+			"DataBaseName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

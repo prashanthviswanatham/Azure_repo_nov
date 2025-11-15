@@ -1,0 +1,115 @@
+{
+	"name": "Until",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Final_List",
+					"value": {
+						"value": "@variables('Cum_list')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('Running_num'),69)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Running_num",
+								"value": {
+									"value": "@pipeline().parameters.input[add(length(variables('Cum_list')),1)]",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Cum_list",
+								"value": {
+									"value": "@variables('Running_num')",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			}
+		],
+		"parameters": {
+			"input": {
+				"type": "array",
+				"defaultValue": [
+					1,
+					2,
+					34,
+					69,
+					45,
+					6,
+					7
+				]
+			}
+		},
+		"variables": {
+			"Cum_list": {
+				"type": "Array"
+			},
+			"Running_num": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"Final_List": {
+				"type": "Array"
+			},
+			"iterator": {
+				"type": "Integer"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-10-25T21:56:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
